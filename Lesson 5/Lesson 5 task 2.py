@@ -13,6 +13,7 @@ while True:                                                           # Созд
         list2.append(randomizer)                                      # Добавление объекта в конец списка 2
     print("First list: " + str(list1) + "\n" + "Second list: " + str(list2))    # Вывод 1 и 2 списка
     break                                                                       # Остановка цикла
-conversion = set(list1 + list2)                                                 # Соединение двух списков в один tuple
-list3 = list(conversion)                                                        # Конвертация с tuple в список
-print("Third list: " + str(list3))                                              # Вывод 3 строки
+conversion1 = set(list1)                                              # Конвертация списка1 в tuple
+conversion2 = set(list2)                                              # Конвертация списка2 в tuple
+list3 = conversion1.intersection(conversion2)                         # Пересичение объектов
+print("Third list: " + str(list(list3)))                              # Вывод 3 строки
