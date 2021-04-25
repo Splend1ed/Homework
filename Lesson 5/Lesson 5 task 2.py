@@ -3,9 +3,11 @@ import random
 
 list1 = []
 list2 = []
-while len(list1) < 10 and len(list2) < 10:
+while len(list1) < 10:
     randomizer = random.randint(1, 10)
     list1.append(randomizer)
+while len(list2) < 10:
+    randomizer = random.randint(1, 10)
     list2.append(randomizer)
 print("First list: " + str(list1) + "\n" + "Second list: " + str(list2))
 conversion1 = set(list1)
