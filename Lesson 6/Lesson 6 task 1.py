@@ -1,16 +1,11 @@
-print("Welcome to the vocabulary auto maker!")
-dictionary = {}
-while True:
-    keys = input("Enter your keys: ")
-    value = input("Enter your values: ")
-    dictionary.update({keys: value})
-    print(dictionary)
-    command_quit_or_continue = input('If you want to go out write "q" or if you want continue write "y"\n')
-    if command_quit_or_continue == "q":
-        break
-    elif command_quit_or_continue == "y":
-        continue
-    else:
-        print("Invalid error.\n")
-    break
-# Не так понял задание!:(
+# 1 вариант (Не совсем правельный из-за того что делает несколько диктов)
+string = input("Enter your string: ").strip().split()
+for i in set(string):
+    print({i: string.count(i)})
+
+# 2 вариант(Похож на вариант который смотрели на уроке)
+
+# string = input("Enter your string: ").strip().split()
+# print({i: string.count(i) for i in string})
+
+# mama luba davai davai davai
