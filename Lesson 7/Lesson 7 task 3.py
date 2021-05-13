@@ -13,4 +13,4 @@ def make_operation(mathematical_action, first_number, second_number, third_numbe
         print(division_action)
 
 
-make_operation("/", 7, 7, 2, 5)
+make_operation("-", 7, 7, 2, 5)
