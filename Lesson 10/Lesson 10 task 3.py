@@ -2,7 +2,8 @@ CHANNELS = ["BBC", "Discovery", "TV1000"]
 
 
 class TvController:
-    def __init__(self, first_channel, second_channel, third_channel):
+    def __init__(self, first_channel, second_channel, third_channel, current_volume):
+        self.current_volume = current_volume
         self.default_channel = first_channel
         self.current_channel = self.default_channel
         self.first_channel = first_channel
@@ -71,9 +72,21 @@ class TvController:
             else:
                 print('No!')
 
+    def volume_down(self, value):
+        self.current_volume -= value
+        if self.current_volume < 0:
+            self.current_volume = 0
+        print(self.current_volume)
+
+    def volume_up(self, value):
+        self.current_volume += value
+        if self.current_volume > 100:
+            self.current_volume = 100
+        print(f'Volume: {self.current_volume}')
+
 
 def user_interface():
-    controller = TvController(CHANNELS[0], CHANNELS[1], CHANNELS[2])
+    controller = TvController(CHANNELS[0], CHANNELS[1], CHANNELS[2], 1)
     while True:
         user_input = int(input('''
 +--------------------------------+
@@ -85,7 +98,9 @@ def user_interface():
 | 5 - Switch to next channel     |
 | 6 - Switch to previous channel |
 | 7 - Check for a channel        |
-+--------------------------------|
+| 8 - Volume up                  |
+| 9 - Volume down                |
++--------------------------------+
 Choose your action: '''))
         if user_input == 1:
             controller.to_current_channel()
@@ -101,6 +116,10 @@ Choose your action: '''))
             controller.previous_channel()
         elif user_input == 7:
             controller.is_exist()
+        elif user_input == 8:
+            controller.volume_up(1)
+        elif user_input == 9:
+            controller.volume_down(1)
         else:
             print('Try again!')
         continue
