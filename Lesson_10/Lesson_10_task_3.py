@@ -2,7 +2,7 @@ CHANNELS = ["BBC", "Discovery", "TV1000"]
 
 
 class TvController:
-    def __init__(self, first_channel, second_channel, third_channel, current_volume):
+    def __init__(self, first_channel: str, second_channel: str, third_channel: str, current_volume: int):
         self.current_volume = current_volume
         self.default_channel = first_channel
         self.current_channel = self.default_channel
@@ -72,13 +72,13 @@ class TvController:
             else:
                 print('No!')
 
-    def volume_down(self, value):
+    def volume_down(self, value: int):
         self.current_volume -= value
         if self.current_volume < 0:
             self.current_volume = 0
         print(self.current_volume)
 
-    def volume_up(self, value):
+    def volume_up(self, value: int):
         self.current_volume += value
         if self.current_volume > 100:
             self.current_volume = 100
