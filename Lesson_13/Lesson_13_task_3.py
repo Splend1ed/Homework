@@ -1,9 +1,9 @@
 def choose_func(nums: list, func1, func2):
     for i in nums:
-        if i > 0:
-            yield func1(nums)
-        else:
-            yield func2(nums)
+        if i < 0:
+            return func2(nums)
+    else:
+        return func1(nums)
 
 
 nums1 = [1, 2, 3, 4, 5]
@@ -18,5 +18,5 @@ def remove_negatives(nums):
     return [num for num in nums if num > 0]
 
 
-assert choose_func(nums1, square_nums, remove_negatives)
-assert choose_func(nums2, square_nums, remove_negatives)
+assert choose_func(nums1, square_nums, remove_negatives) == [1, 4, 9, 16, 25]
+assert choose_func(nums2, square_nums, remove_negatives) == [1, 3, 5]
