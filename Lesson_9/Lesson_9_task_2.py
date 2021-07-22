@@ -12,7 +12,7 @@ def main_info():
 | To add new entries enter - 1                                                                                         |
 | To Search by name enter - 2                                                                                          |
 | To search by last name enter - 3                                                                                     |
-| To search by name enter - 4                                                                                          |
+| To search by full name enter - 4                                                                                     |
 | To search by phone number enter - 5                                                                                  |
 | To search by city or state, enter - 6                                                                                |
 | To delete an entry for this phone number, enter - 7                                                                  |
@@ -25,104 +25,119 @@ def main_info():
 def add_new_entries():
     with open(phonebook, 'r') as js:
         people = json.load(js)
-    if len(people) <= 100:
+    if len(people) < 100:
         person = {
             'First name': input('First name: '),
             'Last name': input('Last name: '),
             'Phone number': input('Phone number: '),
             'City': input('City: '),
-            'State': input('State: ')}
+            'State': input('State: ')
+        }
         people.append(person)
+        print('Contact was added!')
         with open(phonebook, 'w') as json_phonebook:
             json.dump(people, json_phonebook, indent=1)
-            json_phonebook.close()
+            return person
     else:
-        if len(people) >= 100:
-            print('Your phonebook is full, delete a couple of contacts!')
+        print('Your phonebook is full, delete a couple of contacts!')
 
 
-def search_by_first_name():
+def search_by_first_name(first_name: str):
     with open(phonebook, 'r') as json_phonebook:
         search = json.load(json_phonebook)
-    try:
+    if len(search) < 1:
+        print('Empty phonebook!')
+    else:
         for i in range(0, 100):
-            print('List of all last names:\n' + '-' + search[i]['First name'])
-    except IndexError:
-        print('-Empty')
+            if search[i]['First name'] == first_name:
+                print(search[i])
+                return search[i]
+        else:
+            return 'Contact with this name not found!'
 
 
-def search_by_last_name():
+def search_by_last_name(last_name: str):
     with open(phonebook, 'r') as json_phonebook:
         search = json.load(json_phonebook)
-    try:
-        for i in range(0, 100):
-            print('List of all last names:\n' + '-' + search[i]['Last name'])
-    except IndexError:
-        print('-Empty')
+    if len(search) < 1:
+        return 'Empty phonebook'
+    else:
+        for i in range(len(search)):
+            if search[i]['Last name'] == last_name:
+                print(search[i])
+                return search[i]
+        else:
+            return 'Contact with this name not found!'
 
 
-def search_by_full_name():
+def search_by_full_name(full_name: str):
     with open(phonebook, 'r') as json_phonebook:
         search = json.load(json_phonebook)
-    try:
-        for i in range(0, 100):
-            print('List of all first name and all last names:\n' + '-' + search[i]['First name'] + '\n' + '-' +
-                  search[i]['Last name'] + '\n')
-    except IndexError:
-        print('-Empty')
+    if len(search) < 1:
+        print('Empty phonebook!')
+    else:
+        for i in range(len(search)):
+            if search[i]['First name'] + ' ' + search[i]['Last name'] == full_name:
+                print(search[i])
+                return search[i]
+        else:
+            return 'Contact with this name not found!'
 
 
-def search_by_telephone_number():
+def search_by_telephone_number(number: str):
     with open(phonebook, 'r') as json_phonebook:
         search = json.load(json_phonebook)
-    try:
-        for i in range(0, 100):
-            print('List off all phone numbers:\n' + '-' + search[i]['Phone number'])
-    except IndexError:
-        print('-Empty')
+    if len(search) < 1:
+        print('Empty phonebook!')
+    else:
+        for i in range(len(search)):
+            if search[i]['Phone number'] == number:
+                print(search[i])
+                return search[i]
+        else:
+            return 'Contact with this name not found!'
 
 
-def search_by_city_or_state():
+def search_by_city_or_state(city=None, state=None):
     with open(phonebook, 'r') as json_phonebook:
         search = json.load(json_phonebook)
-    try:
-        for i in range(0, 100):
-            print('Search by city or state:\n' + '-' + search[i]['City'] + '-' or search[i]['State'])
-    except IndexError:
-        print('-Empty')
+    if len(search) < 1:
+        print('Empty phonebook!')
+    else:
+        for i in range(len(search)):
+            if search[i]['City'] == city or search[i]['State'] == state:
+                print(search[i])
+                return search[i]
+        else:
+            return 'Contact with this name not found!'
 
 
-def delete_telephone_number():
+def delete_telephone_number(contact: int):
     with open(phonebook, 'r') as json_phonebook:
         delete = json.load(json_phonebook)
-    user_input = int(input('Which contact to remove?: \n'))
-    user_input -= 1
-    del delete[user_input]
-    with open(phonebook, 'w') as delete_contact:
-        json.dump(delete, delete_contact, indent=1)
-    print(user_input, 'contact was deleted')
+    if len(delete) < 1:
+        return 'Your phonebook is empty!'
+    elif contact - 1 > len(delete):
+        return f'Contact with this name :{delete[contact - 1]["First name"]} does not exist in list of contacts'
+    else:
+        deleted_contact = delete.pop(contact - 1)
+        with open(phonebook, 'w') as delete_contact:
+            json.dump(delete, delete_contact, indent=1)
+            return deleted_contact
 
 
-def update_record():
+def update_record(contact: int):
     with open(phonebook, 'r') as json_phonebook:
         update = json.load(json_phonebook)
-    user_input = int(input('Which contact to update?: \n'))
-    user_input -= 1
-    update[user_input]['First name'] = input('First name: ')
-    update[user_input]['Last name'] = input('Last name: ')
-    update[user_input]['Phone number'] = input('Phone number: ')
-    update[user_input]['City'] = input('City: ')
-    update[user_input]['State'] = input('State: ')
+    update[contact - 1]['First name'] = input('First name: ')
+    update[contact - 1]['Last name'] = input('Last name: ')
+    update[contact - 1]['Phone number'] = input('Phone number: ')
+    update[contact - 1]['City'] = input('City: ')
+    update[contact - 1]['State'] = input('State: ')
     with open(phonebook, 'w') as update_contact:
         json.dump(update, update_contact, indent=1)
-    print(user_input, 'was updated!')
-
-
-def empty_phonebook():
-    json_phonebook = open(phonebook, 'r')
-    json_phonebook = json_phonebook.read()
-    if len(json_phonebook) < 3:
-        print('Phonebook is empty, please add contacts')
+    print(update[contact - 1]['First name'], 'was updated!')
+    return update[contact - 1]
 
 
 def user_choice():
@@ -134,19 +149,20 @@ def user_choice():
         if user_input == '1':
             add_new_entries()
         elif user_input == '2':
-            search_by_first_name()
+            search_by_first_name(input('Enter first name wich u wanna search: '))
         elif user_input == '3':
-            search_by_last_name()
+            search_by_last_name(input('Enter last name wich u wanna search: '))
         elif user_input == '4':
-            search_by_full_name()
+            search_by_full_name(input('Enter full name wich u wanna search: '))
         elif user_input == '5':
-            search_by_telephone_number()
+            search_by_telephone_number(input('Enter phone number wich u wanna search: '))
         elif user_input == '6':
-            search_by_city_or_state()
+            search_by_city_or_state(city=input('Enter city wich u wanna search([Enter] to skip): '),
+                                    state=input('Enter state wich u wanna search([Enter] to skip): '))
         elif user_input == '7':
-            delete_telephone_number()
+            delete_telephone_number(contact=int(input('Which contact to remove?: \n')))
         elif user_input == '8':
-            update_record()
+            update_record(contact=int(input('Which contact to update?: \n')))
         elif user_input == '9':
             break
         else:
