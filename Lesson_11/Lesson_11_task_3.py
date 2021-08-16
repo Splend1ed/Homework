@@ -25,11 +25,10 @@ class ProductStore:
     """ Скидка на продукт """
     def set_discount(self, identifier: str, percent: str):  # Не виконана одна умова identifier_type
         percent_conversion = '1.' + percent.rstrip('%')
-        float(percent_conversion)
         for i in self.stock:
             if identifier == i['Product'].name:
-                i['Product'].price /= percent_conversion
-                print(f'The discount {percent_conversion} was set for such products {identifier}')
+                i['Product'].price *= float(percent_conversion)
+                print(f'The discount {percent}% was set for such products {identifier}')
             else:
                 print('Something went wrong!')
 
@@ -81,7 +80,6 @@ q - quit
 """)
         user_choice = input('Enter your action: ')
         if user_choice == '1':
-            print(f'{product1.name}, {product2.name}, {product3.name}, {product4.name}')
             the_product_choice = input('Choose a product(write name a product): ')
             if the_product_choice == 'potato':
                 product_store.add(product1, int(input('Enter quantity: ')))
